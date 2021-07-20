@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  font-family: "Quicksand";
+  color: rgb(250, 249, 249);
+}
+.navbar {
+  padding: 20px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  align-items: center;
+  max-width: 75%;
+  margin: 0 auto;
+  border-radius: 5px;
+  box-shadow:  0 20px 37px rgb(255, 69, 0, 0.7);
+}
+
+.navbar .links {
+  margin-left: auto;
+}
+
+.navbar a {
+  margin-left: 36px;
+  text-decoration: none;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.navbar a:hover {
+  box-shadow:  0 8px 20px rgb(255, 69, 0, 0.6);
+}
+.content {
+  max-width: 80%;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.table {
+  width: 100%; 
+  box-shadow:  0 27px 29px rgb(255, 69, 0, 0.7);
+  margin-top: 50px;
+  padding: 20px;
+}
+
+.title {
+  color: rgb(255, 229, 215);
+  text-align: center; 
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.label {
+  margin-top: 30px;
+}
+
+/* search component */
+.search {
+  max-width: 1000px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.search label {
+  text-align: left;
+  display: block;
+}
+
+.search h2 {
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+.search input, .search select {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+}
+
+.input {
+  box-shadow:  0 10px 27px rgb(255, 69, 0, 0.7);
+  padding: 10px; 
+  color: black; 
+  font-size: 18px;
+}
+
+.image {
+  width: 95%;
+  height: 95%;
+  border-radius: 5px
+}
+
+
+
+@media all and (max-width: 800px) {
+  .navigation {
+    /* When on medium sized screens, we center it by evenly distributing empty space around items */
+    justify-content: space-around;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .navigation {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+  }
+}
