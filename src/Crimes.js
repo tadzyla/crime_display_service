@@ -1,4 +1,3 @@
-import useFetch from './useFetch';
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2'
 import axios from 'axios';
@@ -9,21 +8,19 @@ const Crimes = () => {
    
     const [chartData, setChartData]  = useState({});
     const [date, setDate] = useState('2021-03');
-    const [force, setForce] = useState('leicestershire')
-    // const { data, isPending, error } = useFetch(`https://data.police.uk/api/crimes-no-location?category=all-crime&force=${force}&date=${date}`);
-
+    const [force, setForce] = useState('leicestershire');
+    const [forces, setForces] = useState([]);
 
     
     const Chart = () => {
 
         let chartData = [];
-
+        
         axios.get(`https://data.police.uk/api/crimes-no-location?category=all-crime&force=${force}&date=${date}`)
         .then(res => {
-        let data = res.data;
-            console.log(data)
-        for(const dataObj of data ){
+        for(const dataObj of res.data ){
             if (chartData.some(e => e.label === dataObj.category)) {
+
                 const elem = (element) => element.label === dataObj.category;
                 let index = chartData.findIndex(elem);
                 let countNo = chartData[index].count+1;
@@ -113,6 +110,15 @@ const Crimes = () => {
 }
 
 useEffect(() => {
+
+    const fetchData = async () => {
+        const result = await axios(`https://data.police.uk/api/forces`);
+   
+        setForces(result.data);
+      };
+   
+      fetchData();
+
     Chart();
   }, [date, force]);
 
@@ -121,9 +127,6 @@ useEffect(() => {
         <div>
             <h1 className="title">This is page for crimes in your county for that date</h1>
 
-            
-            {/* {error && <div>{ error }</div>}
-            {isPending && <div className="title">Getting information about crimes, please be patient...</div> } */}
 
             <div className="search">
                 <h3 className="title">Search will load automatically</h3>
@@ -138,15 +141,20 @@ useEffect(() => {
                     onChange={e => setDate(e.target.value)}
                     />
                     
-                    <label className="label">Select County</label>
+                    <label className="label">Select Police Force</label>
 
                     <select
                         className="input"
                         value={force}
                         onChange={(e) => setForce(e.target.value)}
                     >
-                        <option style={{color: 'black'}} value='leicestershire'>Leichestershire</option>
-                        <option style={{color: 'black'}} value='south-yorkshire'>South Yorkshire</option>
+						
+                        {forces.map((value) => (
+							<option style={{color: 'black'}} value={value.id} key={value.id}>
+								{value.name}
+							</option>
+						))}
+                        
                     </select>
                 </form>
             </div>
