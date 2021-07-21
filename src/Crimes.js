@@ -7,19 +7,25 @@ import axios from 'axios';
 const Crimes = () => {
    
     const [chartData, setChartData]  = useState({});
-    const [date, setDate] = useState('2021-03');
-    const [force, setForce] = useState('leicestershire');
+    const [date, setDate] = useState('');
+    const [force, setForce] = useState('avon');
     const [forces, setForces] = useState([]);
     const [isPending, setIsPending] = useState(true);
+    const [errorText, setText] = useState('');
+    const [dataMessage, setDataMessage] = useState('');
 
-    
     function chart() {
 
         let chartData = [];
         
         axios.get(`https://data.police.uk/api/crimes-no-location?category=all-crime&force=${force}&date=${date}`)
         .then(res => {
-            
+            if(res.data.length === 0) {
+                setDataMessage("No crimes on this month")
+            } else {
+                setDataMessage('');
+            }
+            console.log(res.data)
         for(const dataObj of res.data ){
             if (chartData.some(e => e.label === dataObj.category)) {
 
@@ -103,22 +109,39 @@ const Crimes = () => {
                                          borderWidth: 1
                                      }]
         });
+        setText('');
     
     })
 
-    .catch(err =>{
-        console.log(err);
+    .catch(err => {
+
+        setChartData([]);
+        setText('Check if your date is correct');
+        setDataMessage('');
+;
     })
     
 }
+
 useEffect(() => {
     const fetchData = async () => {
         const result = await axios(`https://data.police.uk/api/forces`);
         setForces(result.data);
       };
-      chart();
       fetchData();
+  }, []);
+
+
+useEffect(() => {
+      chart();
   }, [date, force]);
+
+
+  const handleSubmit = (e) => {
+    
+    setDate(e.target.value)   
+  }
+
 
 
     return ( 
@@ -128,15 +151,19 @@ useEffect(() => {
 
             <div className="search">
             {isPending && <div>Getting info from Police, please be patient...</div> }
+            
                 <h3 className="title">Search will load automatically</h3>
 
                 <form>
                     <label className="label">Write date here (YYYY-MM)</label>
                     <input 
                     className="input"
+                    type='text'
+                    maxLength='7'
                     value={date}
-                    onChange={e => setDate(e.target.value)}
+                    onChange={handleSubmit}
                     />
+
                     
                     <label className="label">Select Police Force</label>
 
@@ -153,12 +180,17 @@ useEffect(() => {
 						))}
                         
                     </select>
+                   
                 </form>
             </div>
 
 
 <div className="chart">
               <h1 className="title">Crimes Chart</h1>
+              <input className="error" type="text" 
+                            value={errorText}/>
+            <input className="error" type="text" 
+                            value={dataMessage}/>
               <div>
                   <Bar
                     data={chartData}

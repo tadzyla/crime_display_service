@@ -53,7 +53,7 @@
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
-  border: 1px solid rgba(41, 36, 34, 0.7);
+  border: 1px solid rgba(128, 121, 118, 0.7);
   box-sizing: border-box;
   display: block;
 }
@@ -67,6 +67,15 @@
 
 .chart {
   margin-top: 40px;
+}
+
+.error {
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: center;
+  color: rgb(243, 1, 1);
+  font-size: 18px;
 }
  
 
