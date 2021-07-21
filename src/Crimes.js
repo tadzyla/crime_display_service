@@ -25,7 +25,7 @@ const Crimes = () => {
             } else {
                 setDataMessage('');
             }
-            console.log(res.data)
+            
         for(const dataObj of res.data ){
             if (chartData.some(e => e.label === dataObj.category)) {
 
@@ -128,7 +128,7 @@ useEffect(() => {
         const result = await axios(`https://data.police.uk/api/forces`);
         setForces(result.data);
       };
-      fetchData();
+    fetchData();
   }, []);
 
 
@@ -138,7 +138,6 @@ useEffect(() => {
 
 
   const handleSubmit = (e) => {
-    
     setDate(e.target.value)   
   }
 
