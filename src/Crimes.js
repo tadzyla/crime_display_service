@@ -10,6 +10,7 @@ const Crimes = () => {
     const [date, setDate] = useState('2021-03');
     const [force, setForce] = useState('leicestershire');
     const [forces, setForces] = useState([]);
+    const [isPending, setIsPending] = useState(true);
 
     
     function chart() {
@@ -18,6 +19,7 @@ const Crimes = () => {
         
         axios.get(`https://data.police.uk/api/crimes-no-location?category=all-crime&force=${force}&date=${date}`)
         .then(res => {
+            
         for(const dataObj of res.data ){
             if (chartData.some(e => e.label === dataObj.category)) {
 
@@ -30,7 +32,6 @@ const Crimes = () => {
             chartData.push(({label:dataObj.category, count:1}));
             }
             
-
         }
             
         let label = [];
@@ -39,7 +40,8 @@ const Crimes = () => {
             label.push(d.label);
             count.push(d.count);
         }
-        
+
+        setIsPending(false);
 
         setChartData({
             labels: label,
@@ -101,42 +103,37 @@ const Crimes = () => {
                                          borderWidth: 1
                                      }]
         });
-        
+    
     })
+
     .catch(err =>{
         console.log(err);
     })
     
 }
-
 useEffect(() => {
-
     const fetchData = async () => {
         const result = await axios(`https://data.police.uk/api/forces`);
-   
         setForces(result.data);
       };
-   
+      chart();
       fetchData();
-
-    chart();
   }, [date, force]);
 
-    
+
     return ( 
         <div>
             <h1 className="title">This is page for crimes in your county for that date</h1>
 
 
             <div className="search">
+            {isPending && <div>Getting info from Police, please be patient...</div> }
                 <h3 className="title">Search will load automatically</h3>
 
                 <form>
                     <label className="label">Write date here (YYYY-MM)</label>
                     <input 
                     className="input"
-                    type="text"
-                    maxLength='7'
                     value={date}
                     onChange={e => setDate(e.target.value)}
                     />
@@ -160,8 +157,8 @@ useEffect(() => {
             </div>
 
 
-<div>
-              <h1>Crimes Chart</h1>
+<div className="chart">
+              <h1 className="title">Crimes Chart</h1>
               <div>
                   <Bar
                     data={chartData}
