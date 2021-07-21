@@ -12,7 +12,7 @@ const Crimes = () => {
     const [forces, setForces] = useState([]);
 
     
-    const Chart = () => {
+    function chart() {
 
         let chartData = [];
         
@@ -119,7 +119,7 @@ useEffect(() => {
    
       fetchData();
 
-    Chart();
+    chart();
   }, [date, force]);
 
     
