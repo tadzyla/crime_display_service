@@ -13,12 +13,6 @@
   padding: 20px;
 }
 
-.table {
-  width: 100%; 
-  box-shadow:  0 27px 29px rgb(255, 69, 0, 0.7);
-  margin-top: 50px;
-  padding: 20px;
-}
 
 .title {
   color: rgba(41, 36, 34, 0.7);
@@ -53,6 +47,7 @@
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
+  border-radius: 5px;
   border: 1px solid rgba(128, 121, 118, 0.7);
   box-sizing: border-box;
   display: block;
@@ -78,8 +73,6 @@
   font-size: 18px;
 }
  
-
-
 
 @media all and (max-width: 800px) {
   .navigation {
