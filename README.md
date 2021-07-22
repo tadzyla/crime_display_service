@@ -1,1 +1,1 @@
-Web application, extracting data from Police in UK API. Data is sorted by police forces and date(Year-month)
+Web application, extracting data from Police API in UK. Data is sorted by police forces and date(Year-month). For this project I used React library with Axios to get data from API. To display chart, I used react wrapper for Chartjs library.
