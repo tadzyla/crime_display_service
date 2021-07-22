@@ -7,8 +7,8 @@ import axios from 'axios';
 const Crimes = () => {
    
     const [chartData, setChartData]  = useState({});
-    const [date, setDate] = useState('');
-    const [force, setForce] = useState('avon');
+    const [date, setDate] = useState('2021-05');
+    const [force, setForce] = useState('avon-and-somerset');
     const [forces, setForces] = useState([]);
     const [isPending, setIsPending] = useState(true);
     const [errorText, setText] = useState('');
@@ -116,7 +116,7 @@ const Crimes = () => {
     .catch(err => {
 
         setChartData([]);
-        setText('Check if your date is correct');
+        setText('Check if your date is correct, data is available from 2018-06');
         setDataMessage('');
 ;
     })
